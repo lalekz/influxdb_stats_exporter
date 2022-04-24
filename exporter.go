@@ -39,9 +39,9 @@ var (
 )
 
 var (
-	influxUrl      = kingpin.Flag("influx.url", "Url to InfluxDB").Default("http://localhost:8086").Envar("INFLUX_URL").URL()
-	influxUser     = kingpin.Flag("influx.user", "InfluxDB username").Default("").Envar("INFLUX_USER").String()
-	influxPassword = kingpin.Flag("influx.password", "InfluxDB password").Default("").Envar("INFLUX_PASSWORD").String()
+	influxUrl      = kingpin.Flag("influx.url", "Url to InfluxDB").Default("http://localhost:8086").Envar("INFLUXDB_URL").URL()
+	influxUser     = kingpin.Flag("influx.user", "InfluxDB username").Default("").Envar("INFLUXDB_ADMIN_USER").String()
+	influxPassword = kingpin.Flag("influx.password", "InfluxDB password").Default("").Envar("INFLUXDB_ADMIN_PASSWORD").String()
 	sslSkipVerify  = kingpin.Flag("ssl.skip-verify", "Skip HTTPS certificate verification").Bool()
 	bindAddr       = kingpin.Flag("web.listen-address", "Address to serve metrics on").Default(":9424").String()
 	metricsPath    = kingpin.Flag("web.metrics-path", "Path to serve metrics on").Default("/metrics").String()
