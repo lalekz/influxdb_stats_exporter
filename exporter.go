@@ -24,6 +24,7 @@ type collector struct {
 }
 
 var (
+	influxComponents = [] string { "httpd", "queryExecutor" }
 	queryDuration = prometheus.NewDesc(
 		prometheus.BuildFQName("influxdb", "exporter", "stats_query_duration_seconds"),
 		"Duration of SHOW STATS query",
@@ -57,6 +58,15 @@ func levelStrings(l []logrus.Level) []string {
 		ls[i] = level.String()
 	}
 	return ls
+}
+
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+	return false
 }
 
 var versionMap = logrus.Fields{
@@ -157,6 +167,9 @@ func (c collector) Collect(ch chan<- prometheus.Metric) {
 
 	for _, res := range r.Results {
 		for _, s := range res.Series {
+			if !contains(influxComponents, s.Name) {
+				continue;
+			}
 			for idx := 0; idx < len(s.Columns); idx++ {
 				seriesName := strings.ToLower(snaker.CamelToSnake(s.Name))
 				colName := strings.ToLower(snaker.CamelToSnake(s.Columns[idx]))
