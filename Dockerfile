@@ -1,4 +1,5 @@
 FROM golang:1.12 AS builder
+RUN git config --global http.sslverify false
 WORKDIR /build/influxdb_stats_exporter/
 COPY . .
 RUN go mod tidy && \
